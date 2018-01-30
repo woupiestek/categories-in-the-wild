@@ -63,9 +63,10 @@ Categories are like cats. You can quickly learn what they are, but that doesn't 
 --- Set up ---
 - In order to separate business logic from technical implementation, we define an interface (or 'trait' in Scala) to go between them. The interface describes the process of storing and fetching data in the database e.g. although it could hide many kinds of service.
 - There are severe limits on the technical details interfaces/traits can hide, however:
-  1 method calls and return values are handled on the same thread.
-  2 methods return at most once.
-  3 all failures pass through the caller of the interface.
+  - controlflow on the business end
+  - method calls and return values done syschronously on the same thread.
+  - methods return at most once.
+  - all failures pass through the caller of the interface.
 Imagine the service is connected reactive stream, but the business logic for handling each element is the same. There are failure that should be handled in the business logic (service unavailable), but there are also failures that don't (stack overflow). A simple interface means that technical details about concurrency, multiple values and technical errors must be handled on the business end.
 - The following solution should be familiar. Wrap the return types with a container type, with methods to pass callback functions. The technical implementation now controls the flow of the program and can implement non blocking io, reuse the same callback when multiple values come in and respond to technical errors without the business being aware of any of it.
 - Here is where categories come in. Behaviors of methods that handle callback functions are know in category theory as the 'coherence laws' that define functors, applicatives, monads etc.
