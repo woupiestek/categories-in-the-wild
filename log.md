@@ -1,3 +1,19 @@
+# 6/2/18 
+- functional programming in js
+  zoals https://github.com/Reactive-Extensions/RxJS
+  https://github.com/stoeffel/awesome-fp-js
+  hoe dan ook, de namen zullen bekend voorkomen, hoewel ik hier niets uit specifieke programmas gebruik
+- kattenplaatjes
+  in de map plaatsen als ik verbinding heb met het netwerk.
+- voorbeelden uit de migratiescripts
+  Sync, Async, TraversingMonad, PartyAppointments -- of simpelweg intelliJ klaarzetten met deze code erin.
+- experimenten met scalaz, cats, etc.
+
+Marcin stelde dit voor als praatje op de IT area dag
+
+
+Volgende onderwerp: dependent types?
+
 # 16/1/18
 X latex - voor latexila gegaan dit keer.
 

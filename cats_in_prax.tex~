@@ -147,7 +147,7 @@ bind: (X => F[Y]) => F[X] => F[Y]
 
 // bind(f)(bind(g)(x)) === bind((y: X) => bind(f)(g(y))(x))
 // bind(unit)(x) === x
-// bind(f)(unit(x)) === unit(f(x))
+// bind(f)(unit(x)) === f(x)
 
 // map(f)(x) === bind((y: X) => unit(f(y)))(x)
 // zip(x,y) === bind((x0: X) => map((y0: Y) => (x0, y0)))
@@ -159,7 +159,7 @@ bind: (X => F[Y]) => F[X] => F[Y]
 \begin{lstlisting}
 reduceM: F[X] => (X => X => F[X]) => List[X] => F[X]
 
-// reduceM(a)(b)(Nil) === unit(Nil)
+// reduceM(a)(b)(Nil) === unit(a)
 // reduceM(a)(b)(h :: t) === bind(b(h))(reduceM(a)(b)(t))
 \end{lstlisting}
 \end{frame}
@@ -169,7 +169,7 @@ reduceM: F[X] => (X => X => F[X]) => List[X] => F[X]
 \begin{lstlisting}
 unit: X => F[X]
 bind: (X => F[Y]) => F[X] => F[Y]
-reduceM: ((X,X) => F[X]) => List[X] => F[X]
+reduceM: F[X] => ((X,X) => F[X]) => List[X] => F[X]
 \end{lstlisting}
 \end{frame}
 
@@ -178,7 +178,7 @@ reduceM: ((X,X) => F[X]) => List[X] => F[X]
 
 \subsection{scala.concurrent.Future}
 \begin{frame}
-\frametitle{Motivation}
+\frametitle{scala.concurrent.Future}
 \begin{itemize}
 \item used in calendars api, savings me api
 \item Scala standard library
@@ -204,7 +204,7 @@ abstract class Cassandra(implicit ec:ExecutionContext) {
 
 \subsection{Continuation passing style}
 \begin{frame}
-\frametitle{Motivation}
+\frametitle{Continuation passing style}
 Continuation passing style
 \begin{itemize}
 \item abstracts over the notion of registering callbacks
@@ -220,9 +220,9 @@ object CPSMonad {
 
   type CPS[X] = (X => Unit) => Unit
 
-  def unit[X](x: => X): CPS[X] = ((c: X) => Unit) => c(x)
+  def unit[X](x: => X): CPS[X] = (c: X => Unit) => c(x)
 
-  def bind[X, Y](f: X => CPS[Y])(cx: CPS[X]): CPS[Y] = ((cy: Y) => Unit) => cx((x: X) => f(x)(cy))
+  def bind[X, Y](f: X => CPS[Y])(cx: CPS[X]): CPS[Y] = (cy: Y => Unit) => cx((x: X) => f(x)(cy))
   
   //...
 }
@@ -243,7 +243,7 @@ object CPSMonad {
 
 \subsection{Free monads}
 \begin{frame}
-\frametitle{Motivation}
+\frametitle{Free monads}
 \begin{itemize}
 \item Reify everything
 \item Build and manipulate ASTs for later interpretation
@@ -280,9 +280,9 @@ case class ExecuteStatement(statement: Statement) extends CassandraEffect[Result
 \end{lstlisting}
 \end{frame}
 
-\subsection{Generic Monad}
+\subsection{Generic monad}
 \begin{frame}
-\frametitle{Motivation}
+\frametitle{Generic monad}
 \begin{itemize}
 \item abstract over monads themselves
 \item dependency injection applied to monads

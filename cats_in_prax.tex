@@ -40,13 +40,12 @@
 
 \begin{document}
 \lstset{style=Scala}
-
 \begin{frame}
   \titlepage
 \end{frame}
 
 \hide{
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Categories are like \dots}
 Categories are like cats. It is easy to learn what they are, but that doesn't mean you understand them or can work with them without getting hurt.
 \end{frame}
@@ -91,6 +90,7 @@ map: (X => Y) => F[X] => F[Y]
 // map((x: X) => x)(y) === y
 // map(f)(map(g)(y)) === map((x: X) => f(g(x)))(y)
 \end{lstlisting}
+\begin{center} \includegraphics[width=4cm]{Map-Cat.jpg} \end{center}
 \end{frame}
 
 \begin{frame}
@@ -147,7 +147,7 @@ bind: (X => F[Y]) => F[X] => F[Y]
 
 // bind(f)(bind(g)(x)) === bind((y: X) => bind(f)(g(y))(x))
 // bind(unit)(x) === x
-// bind(f)(unit(x)) === unit(f(x))
+// bind(f)(unit(x)) === f(x)
 
 // map(f)(x) === bind((y: X) => unit(f(y)))(x)
 // zip(x,y) === bind((x0: X) => map((y0: Y) => (x0, y0)))
