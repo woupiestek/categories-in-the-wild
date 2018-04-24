@@ -40,13 +40,12 @@
 
 \begin{document}
 \lstset{style=Scala}
-
 \begin{frame}
   \titlepage
 \end{frame}
 
 \hide{
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Categories are like \dots}
 Categories are like cats. It is easy to learn what they are, but that doesn't mean you understand them or can work with them without getting hurt.
 \end{frame}
@@ -91,6 +90,7 @@ map: (X => Y) => F[X] => F[Y]
 // map((x: X) => x)(y) === y
 // map(f)(map(g)(y)) === map((x: X) => f(g(x)))(y)
 \end{lstlisting}
+\begin{center} \includegraphics[height=3cm]{cat_map.jpg} \end{center}
 \end{frame}
 
 \begin{frame}
@@ -107,6 +107,7 @@ zip: (F[X],F[Y]) => F[(X,Y)]
 // map(_._2)(zip(fx, fy)) === fy
 // zip(map(_._1)(z),map(_._2)(z)) === z
 \end{lstlisting}
+\begin{center} \includegraphics[height=3cm]{cat_zip.jpg} \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -128,6 +129,7 @@ traverse: (X => F[X]) => List[X] => F[List[X]]
 //   case (x,y) => x :: y
 // }(zip(f(h),traverse(f)(t)))
 \end{lstlisting}
+\begin{center} \includegraphics[height=3cm]{cat_traverse.jpg} \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -152,6 +154,7 @@ bind: (X => F[Y]) => F[X] => F[Y]
 // map(f)(x) === bind((y: X) => unit(f(y)))(x)
 // zip(x,y) === bind((x0: X) => map((y0: Y) => (x0, y0)))
 \end{lstlisting}
+\begin{center} \includegraphics[height=2cm]{cat_bind.jpg} \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -162,15 +165,23 @@ reduceM: F[X] => (X => X => F[X]) => List[X] => F[X]
 // reduceM(a)(b)(Nil) === unit(a)
 // reduceM(a)(b)(h :: t) === bind(b(h))(reduceM(a)(b)(t))
 \end{lstlisting}
+\begin{center} \includegraphics[height=3cm]{cat_reduce.jpg} \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Monad}
+\begin{columns}
+\begin{column}{0.6\textwidth}
 \begin{lstlisting}
 unit: X => F[X]
 bind: (X => F[Y]) => F[X] => F[Y]
 reduceM: F[X] => ((X,X) => F[X]) => List[X] => F[X]
 \end{lstlisting}
+\end{column}
+\begin{column}{0.4\textwidth}
+\includegraphics[width=\textwidth]{cat_monad.jpg}
+\end{column}
+\end{columns}
 \end{frame}
 
 
